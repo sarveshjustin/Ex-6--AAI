@@ -15,42 +15,27 @@ Step 5:Iterate through each word in the tokenized text.<br>
 ## PROGRAM:
 
 ```
-
 import nltk
 from nltk.corpus import wordnet
-
 nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
 nltk.download('wordnet')
-
 def get_synonyms(word):
     synonyms = set()
     for syn in wordnet.synsets(word):
         for lemma in syn.lemmas():
             synonyms.add(lemma.name())
     return synonyms
-
 def process_text_file(file_path):
     with open(file_path, 'r') as file:
         text = file.read()
     return text  # Return the processed text
-
 text = process_text_file('/content/nature.txt')
-
-# Tokenize the text into sentences
 sentences = nltk.sent_tokenize(text)
-
 for sentence in sentences:
-    # Tokenize each sentence into words
     words = nltk.word_tokenize(sentence)
-
-    # Perform part-of-speech tagging
     pos_tags = nltk.pos_tag(words)
-
-    # Extract verbs
     verbs = [word for word, pos in pos_tags if pos.startswith('V')]
-
-    # Get synonyms for each verb
     for verb in verbs:
         synonyms = get_synonyms(verb)
         print(f"Verb: {verb}")
