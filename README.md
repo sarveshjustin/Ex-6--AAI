@@ -15,31 +15,29 @@ Step 5:Iterate through each word in the tokenized text.<br>
 ## PROGRAM:
 
 ```
+!pip install nltk
 import nltk
-from nltk.corpus import wordnet
-nltk.download('punkt')
-nltk.download('averaged_perceptron_tagger')
+nltk.download( 'punkt' )
 nltk.download('wordnet')
-def get_synonyms(word):
-    synonyms = set()
-    for syn in wordnet.synsets(word):
-        for lemma in syn.lemmas():
-            synonyms.add(lemma.name())
-    return synonyms
-def process_text_file(file_path):
-    with open(file_path, 'r') as file:
-        text = file.read()
-    return text  # Return the processed text
-text = process_text_file('/content/nature.txt')
-sentences = nltk.sent_tokenize(text)
-for sentence in sentences:
-    words = nltk.word_tokenize(sentence)
-    pos_tags = nltk.pos_tag(words)
-    verbs = [word for word, pos in pos_tags if pos.startswith('V')]
-    for verb in verbs:
-        synonyms = get_synonyms(verb)
-        print(f"Verb: {verb}")
-        print(f"Synonyms: {', '.join(synonyms)}\n")
+from nltk.tokenize import word_tokenize
+nltk.download( 'averaged_perceptron_tagger' )
+sentence=input()
+words = word_tokenize(sentence)
+pos_tags= nltk.pos_tag(words)
+for word, tag in pos_tags:
+	print(word, tag)
+from nltk.corpus import wordnet
+synonyms =[]
+antonyms =[]
+for word in words:
+	for syn in wordnet.synsets(word) :
+		for lemma in syn.lemmas():
+			synonyms . append (lemma . name( ) )
+			if lemma . antonyms():
+				antonyms . append ( lemma. antonyms ( ) [0] . name ( ) )
+print ( "Synonyms : " ,set (synonyms) )
+print ( "Antonyms : " ,set(antonyms) )
+
 ```
 
 
